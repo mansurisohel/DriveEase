@@ -1,0 +1,1770 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ────────────────────────────────────────────────
+   BASE LAYER
+──────────────────────────────────────────────── */
+@layer base {
+  *, *::before, *::after { box-sizing: border-box; }
+
+  html {
+    scroll-behavior: smooth;
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  body {
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    @apply bg-slate-50 text-gray-900 antialiased;
+    line-height: 1.6;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    font-family: 'Outfit', sans-serif;
+    line-height: 1.15;
+    @apply text-gray-900;
+  }
+
+  input, select, textarea, button { font-family: inherit; }
+
+  input[type="number"]::-webkit-inner-spin-button,
+  input[type="number"]::-webkit-outer-spin-button { -webkit-appearance: none; }
+  input[type="number"] { -moz-appearance: textfield; }
+
+  /* Clean focus ring — no flashy blue glow */
+  *:focus-visible {
+    outline: 2px solid #2563eb;
+    outline-offset: 2px;
+    border-radius: 6px;
+  }
+
+  a { @apply transition-colors duration-200; }
+
+  img { max-width: 100%; height: auto; display: block; }
+}
+
+/* ────────────────────────────────────────────────
+   COMPONENTS
+──────────────────────────────────────────────── */
+@layer components {
+
+  /* ── Buttons ──*/
+  .btn-primary {
+    @apply inline-flex items-center justify-center gap-2
+           bg-primary-600 hover:bg-primary-700 active:bg-primary-800
+           text-white font-semibold px-6 py-3 rounded-xl
+           transition-all duration-200
+           hover:-translate-y-px active:translate-y-0
+           select-none cursor-pointer
+           disabled:opacity-55 disabled:cursor-not-allowed
+           disabled:hover:translate-y-0;
+  }
+  .btn-secondary {
+    @apply inline-flex items-center justify-center gap-2
+           border-2 border-primary-600 text-primary-600
+           hover:bg-primary-600 hover:text-white
+           font-semibold px-6 py-3 rounded-xl
+           transition-all duration-200 select-none cursor-pointer;
+  }
+  .btn-accent {
+    @apply inline-flex items-center justify-center gap-2
+           bg-accent-500 hover:bg-accent-600 active:bg-accent-700
+           text-white font-semibold px-6 py-3 rounded-xl
+           transition-all duration-200
+           hover:-translate-y-px select-none cursor-pointer
+           disabled:opacity-55 disabled:cursor-not-allowed;
+  }
+  .btn-ghost {
+    @apply inline-flex items-center justify-center gap-2
+           text-gray-600 hover:text-primary-600 hover:bg-primary-50
+           font-medium px-4 py-2.5 rounded-xl
+           transition-all duration-200 select-none cursor-pointer;
+  }
+  .btn-danger {
+    @apply inline-flex items-center justify-center gap-2
+           bg-red-500 hover:bg-red-600 active:bg-red-700 text-white
+           font-semibold px-4 py-2.5 rounded-xl
+           transition-all duration-200 select-none cursor-pointer
+           disabled:opacity-55 disabled:cursor-not-allowed;
+  }
+  .btn-white {
+    @apply inline-flex items-center justify-center gap-2
+           bg-white hover:bg-gray-50 text-primary-600
+           font-semibold px-6 py-3 rounded-xl
+           border border-gray-200 hover:border-gray-300
+           transition-all duration-200
+           select-none cursor-pointer;
+  }
+  .btn-sm {
+    @apply px-4 py-2 text-sm rounded-lg;
+  }
+
+  /* ── Forms ── */
+  .form-group   { @apply space-y-1.5; }
+  .form-label   {
+    @apply block text-sm font-semibold text-gray-700 mb-1.5;
+    letter-spacing: 0.01em;
+  }
+  .form-input {
+    @apply w-full px-4 py-3 bg-white border border-gray-200 rounded-xl
+           text-gray-900 placeholder-gray-400 text-sm
+           focus:outline-none focus:ring-2 focus:ring-primary-500/20
+           focus:border-primary-400 transition-all duration-200;
+  }
+  .form-input:hover:not(:focus) {
+    @apply border-gray-300;
+  }
+  .form-input-error {
+    @apply border-red-400 bg-red-50/40 focus:ring-red-300/25 focus:border-red-400;
+  }
+  .form-error {
+    @apply flex items-center gap-1.5 text-red-500 text-xs font-medium mt-1.5;
+  }
+  .form-hint  { @apply text-gray-400 text-xs mt-1 leading-snug; }
+
+  /* ── Cards ── */
+  .card {
+    @apply bg-white rounded-2xl border border-gray-100;
+    box-shadow: 0 1px 2px rgba(0,0,0,0.04), 0 4px 16px rgba(0,0,0,0.05);
+  }
+  .card-hover {
+    @apply hover:-translate-y-1 transition-all duration-300;
+  }
+  .card-hover:hover { box-shadow: 0 4px 8px rgba(0,0,0,0.05), 0 16px 40px rgba(0,0,0,0.11); }
+  .card-interactive {
+    @apply card transition-all duration-300 cursor-pointer
+           hover:-translate-y-0.5 hover:border-primary-200/60;
+  }
+  .card-interactive:hover { box-shadow: 0 4px 8px rgba(0,0,0,0.05), 0 16px 40px rgba(0,0,0,0.11); }
+
+  /* ── Badges — with dot indicator ── */
+  .badge {
+    @apply inline-flex items-center gap-1.5 text-xs font-semibold px-2.5 py-1 rounded-full;
+  }
+  .badge::before {
+    content: '';
+    @apply w-1.5 h-1.5 rounded-full flex-shrink-0;
+  }
+  .badge-available   { @apply badge bg-emerald-50 text-emerald-700 ring-1 ring-emerald-200; }
+  .badge-available::before   { @apply bg-emerald-500; }
+  .badge-unavailable { @apply badge bg-red-50 text-red-700 ring-1 ring-red-200; }
+  .badge-unavailable::before { @apply bg-red-500; }
+  .badge-pending     { @apply badge bg-amber-50 text-amber-700 ring-1 ring-amber-200; }
+  .badge-pending::before     { @apply bg-amber-500; }
+  .badge-confirmed   { @apply badge bg-emerald-50 text-emerald-700 ring-1 ring-emerald-200; }
+  .badge-confirmed::before   { @apply bg-emerald-500; }
+  .badge-completed   { @apply badge bg-blue-50 text-blue-700 ring-1 ring-blue-200; }
+  .badge-completed::before   { @apply bg-blue-500; }
+  .badge-cancelled   { @apply badge bg-red-50 text-red-600 ring-1 ring-red-200; }
+  .badge-cancelled::before   { @apply bg-red-500; }
+  .badge-info        { @apply badge bg-sky-50 text-sky-700 ring-1 ring-sky-200; }
+  .badge-info::before        { @apply bg-sky-500; }
+
+  /* ── Skeleton ── */
+  .skeleton {
+    @apply rounded-xl;
+    background: linear-gradient(90deg, #f0f4f8 25%, #e8edf3 50%, #f0f4f8 75%);
+    background-size: 400% 100%;
+    animation: skeletonSlide 1.6s ease-in-out infinite;
+  }
+
+  /* ── Section helpers ── */
+  .section-tag   { @apply inline-block text-primary-600 font-bold text-xs tracking-[0.15em] uppercase mb-3; }
+  .section-title { @apply font-display font-bold text-gray-900; }
+  .section-desc  { @apply text-gray-500 leading-relaxed text-base; }
+
+  /* ── Page header ── */
+  .page-header {
+    @apply mb-6;
+  }
+  .page-header h1 {
+    @apply font-display font-bold text-2xl text-gray-900;
+  }
+  .page-header p {
+    @apply text-gray-400 text-sm mt-0.5;
+  }
+
+  /* ── Data table ── */
+  .data-table { @apply w-full text-sm; }
+  .data-table th { @apply text-xs font-bold text-gray-400 uppercase tracking-wider px-5 py-3.5 text-left bg-slate-50 border-b border-gray-100; }
+  .data-table td { @apply px-5 py-4 border-b border-gray-50; }
+  .data-table tr:last-child td { @apply border-b-0; }
+  .data-table tbody tr { @apply hover:bg-slate-50/60 transition-colors; }
+
+  /* ── Section divider ── */
+  .section-divider { @apply border-t border-gray-100 my-8; }
+
+  /* ── Alert / info boxes ── */
+  .alert-info    { @apply flex items-start gap-3 bg-blue-50 border border-blue-200 rounded-xl px-4 py-3.5 text-sm text-blue-800; }
+  .alert-success { @apply flex items-start gap-3 bg-emerald-50 border border-emerald-200 rounded-xl px-4 py-3.5 text-sm text-emerald-800; }
+  .alert-warning { @apply flex items-start gap-3 bg-amber-50 border border-amber-200 rounded-xl px-4 py-3.5 text-sm text-amber-800; }
+  .alert-error   { @apply flex items-start gap-3 bg-red-50 border border-red-200 rounded-xl px-4 py-3.5 text-sm text-red-800; }
+
+  /* ── Toggle switch ── */
+  .toggle-track { @apply relative inline-flex items-center h-6 w-11 rounded-full cursor-pointer transition-colors duration-200; }
+  .toggle-thumb { @apply absolute left-0.5 w-5 h-5 bg-white rounded-full shadow-sm transition-transform duration-200; }
+
+  /* ── Premium badge ── */
+  .premium-badge {
+    @apply text-white font-extrabold rounded-full;
+    background: linear-gradient(135deg, #f59e0b, #ea580c);
+    font-size: 10px;
+    padding: 2px 8px;
+    letter-spacing: 0.05em;
+  }
+
+  /* ── Feature chip ── */
+  .feature-chip {
+    @apply inline-flex items-center gap-1.5 text-xs font-semibold px-3 py-1.5 rounded-full
+           bg-white border border-gray-200 text-gray-700;
+  }
+
+  /* ── Input with icon ── */
+  .input-with-icon    { @apply relative; }
+  .input-icon-left    { @apply absolute left-4 top-1/2 -translate-y-1/2 text-gray-400 text-sm pointer-events-none; }
+  .input-icon-right   { @apply absolute right-4 top-1/2 -translate-y-1/2 text-gray-400 text-sm; }
+  .form-input-icon-l  { @apply pl-11; }
+  .form-input-icon-r  { @apply pr-11; }
+
+  /* ── Stat cards (owner dashboard) ── */
+  .stat-card {
+    @apply card p-5 flex flex-col gap-3;
+    border-top-width: 3px;
+    border-top-style: solid;
+  }
+  .stat-card-value  { @apply font-display font-black text-3xl text-gray-900 leading-none; }
+  .stat-card-label  { @apply text-sm text-gray-500 font-medium; }
+  .stat-card-growth {
+    @apply inline-flex items-center gap-1 text-xs font-semibold px-2 py-0.5 rounded-full;
+  }
+
+  /* ── Divider with label ── */
+  .divider-label {
+    @apply flex items-center gap-3 text-xs text-gray-400 font-semibold uppercase tracking-wider;
+  }
+  .divider-label::before,
+  .divider-label::after {
+    content: '';
+    @apply flex-1 border-t border-gray-200;
+  } 
+
+}
+
+/* ────────────────────────────────────────────────
+   SCROLLBAR
+──────────────────────────────────────────────── */
+::-webkit-scrollbar        { width: 5px; height: 5px; }
+::-webkit-scrollbar-track  { background: transparent; }
+::-webkit-scrollbar-thumb  { background: #cbd5e1; border-radius: 99px; }
+::-webkit-scrollbar-thumb:hover { background: #94a3b8; }
+
+/* ────────────────────────────────────────────────
+   FORM CONTROLS
+──────────────────────────────────────────────── */
+input[type="range"] {
+  accent-color: #2563eb;
+  height: 5px;
+  cursor: pointer;
+}
+input[type="date"]::-webkit-calendar-picker-indicator,
+input[type="time"]::-webkit-calendar-picker-indicator {
+  opacity: 0.5;
+  cursor: pointer;
+}
+
+/* Select arrow improvement */
+select.form-input {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Cpath fill='none' stroke='%239ca3af' stroke-width='2' d='M4 6l4 4 4-4'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 14px center;
+  background-size: 14px;
+  padding-right: 40px;
+  appearance: none;
+}
+
+/* ────────────────────────────────────────────────
+   BACKGROUNDS
+──────────────────────────────────────────────── */
+.hero-bg {
+  background: linear-gradient(135deg, #0a1628 0%, #0f2046 25%, #1a3a7a 55%, #2055c7 80%, #2563eb 100%);
+}
+.auth-gradient {
+  background: linear-gradient(160deg, #0f2046 0%, #1a3a7a 40%, #2563eb 75%, #1d4ed8 100%);
+}
+.owner-bg {
+  background: linear-gradient(135deg, #0a1628, #0f2046);
+}
+.glass {
+  backdrop-filter: blur(18px) saturate(160%);
+  background: rgba(255,255,255,0.1);
+  border: 1px solid rgba(255,255,255,0.16);
+}
+
+/* ────────────────────────────────────────────────
+   PAYMENT
+──────────────────────────────────────────────── */
+.payment-method-active {
+  background: linear-gradient(135deg, #2563eb, #4f46e5);
+  color: white;
+}
+
+/* ────────────────────────────────────────────────
+   TIER CARDS
+──────────────────────────────────────────────── */
+.tier-card-standard:hover { border-color: rgba(37,99,235,0.35); box-shadow: 0 8px 32px rgba(37,99,235,0.10); }
+.tier-card-premium:hover  { border-color: rgba(245,158,11,0.35); box-shadow: 0 8px 32px rgba(245,158,11,0.10); }
+
+/* ────────────────────────────────────────────────
+   STAT CARD TOP ACCENTS
+──────────────────────────────────────────────── */
+.stat-blue   { @apply border-t-blue-500; }
+.stat-green  { @apply border-t-emerald-500; }
+.stat-amber  { @apply border-t-amber-500; }
+.stat-violet { @apply border-t-violet-500; }
+
+/* ────────────────────────────────────────────────
+   ANIMATIONS
+──────────────────────────────────────────────── */
+@keyframes pageIn {
+  from { opacity: 0; transform: translateY(8px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+@keyframes skeletonSlide {
+  0%   { background-position: 100% 0; }
+  100% { background-position: -100% 0; }
+}
+@keyframes float {
+  0%, 100% { transform: translateY(0); }
+  50%       { transform: translateY(-10px); }
+}
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+@keyframes slideUp {
+  from { opacity: 0; transform: translateY(20px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+@keyframes slideInRight {
+  from { opacity: 0; transform: translateX(16px); }
+  to   { opacity: 1; transform: translateX(0); }
+}
+@keyframes scaleIn {
+  from { opacity: 0; transform: scale(0.95); }
+  to   { opacity: 1; transform: scale(1); }
+}
+@keyframes shimmer {
+  0%   { transform: translateX(-100%); }
+  100% { transform: translateX(100%); }
+}
+
+.animate-float       { animation: float 4s ease-in-out infinite; }
+.animate-fade-in     { animation: fadeIn 0.3s ease-out both; }
+.animate-slide-up    { animation: slideUp 0.4s ease-out both; }
+.animate-scale-in    { animation: scaleIn 0.2s ease-out both; }
+.animate-pulse-slow  { animation: pulse 3s cubic-bezier(0.4,0,0.6,1) infinite; }
+
+/* ────────────────────────────────────────────────
+   MOBILE
+──────────────────────────────────────────────── */
+html, body { overflow-x: hidden; }
+
+input[type="date"],
+input[type="time"] { min-height: 44px; font-size: 14px; }
+
+@media (max-width: 640px) {
+  input, select, textarea {
+    font-size: 16px !important;
+  }
+  .btn-primary, .btn-secondary, .btn-danger {
+    @apply text-sm px-4 py-2.5;
+  }
+}
+
+/* ────────────────────────────────────────────────
+   PRINT
+──────────────────────────────────────────────── */
+@media print {
+  .no-print { display: none !important; }
+}
+
+/* ────────────────────────────────────────────────
+   TOAST Z-INDEX
+──────────────────────────────────────────────── */
+.react-hot-toast { z-index: 9999 !important; }
+
+/* ────────────────────────────────────────────────
+   COUNTER / NUMBER ANIMATION
+──────────────────────────────────────────────── */
+@keyframes countUp {
+  from { opacity: 0; transform: translateY(8px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+.count-animate { animation: countUp 0.4s ease-out both; }
+
+/* ────────────────────────────────────────────────
+   TIER CARD GLOW
+──────────────────────────────────────────────── */
+.tier-card-standard-glow:hover {
+  box-shadow: 0 0 0 1px rgba(37,99,235,0.15), 0 8px 32px rgba(37,99,235,0.12);
+}
+.tier-card-premium-glow:hover {
+  box-shadow: 0 0 0 1px rgba(245,158,11,0.2), 0 8px 32px rgba(245,158,11,0.14);
+}
+
+/* ────────────────────────────────────────────────
+   OWNER SIDEBAR POLISH
+──────────────────────────────────────────────── */
+aside[class*="bg-\[#0a1628\]"] {
+  border-right: 1px solid rgba(255,255,255,0.05);
+}
+
+/* ────────────────────────────────────────────────
+   IMPROVED RANGE SLIDER
+──────────────────────────────────────────────── */
+input[type="range"] {
+  -webkit-appearance: none;
+  height: 4px;
+  background: #e2e8f0;
+  border-radius: 4px;
+  outline: none;
+  cursor: pointer;
+}
+input[type="range"]::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  width: 18px;
+  height: 18px;
+  background: #2563eb;
+  border-radius: 50%;
+  border: 3px solid white;
+  box-shadow: 0 1px 4px rgba(37,99,235,0.4);
+  cursor: pointer;
+  transition: transform 0.15s;
+}
+input[type="range"]::-webkit-slider-thumb:hover {
+  transform: scale(1.15);
+}
+input[type="range"]::-moz-range-thumb {
+  width: 18px;
+  height: 18px;
+  background: #2563eb;
+  border-radius: 50%;
+  border: 3px solid white;
+  box-shadow: 0 1px 4px rgba(37,99,235,0.4);
+  cursor: pointer;
+}
+
+/* ────────────────────────────────────────────────
+   CARD SHADOW ENHANCEMENT
+──────────────────────────────────────────────── */
+.shadow-card-hover {
+  box-shadow: 0 4px 6px -1px rgba(0,0,0,0.07), 0 20px 48px -8px rgba(0,0,0,0.13) !important;
+}
+
+/* ────────────────────────────────────────────────
+   OWNER TOPBAR SEARCH FOCUS
+──────────────────────────────────────────────── */
+.owner-search:focus-within {
+  border-color: #bfdbfe;
+  box-shadow: 0 0 0 3px rgba(37,99,235,0.08);
+}
+
+/* ────────────────────────────────────────────────────────────────────
+   UTILITY ADDITIONS — opacity helpers Tailwind JIT sometimes misses
+   ──────────────────────────────────────────────────────────────────── */
+
+/* Background opacity utilities */
+.bg-white\/6  { background-color: rgba(255,255,255,0.06); }
+.bg-white\/8  { background-color: rgba(255,255,255,0.08); }
+.bg-white\/12 { background-color: rgba(255,255,255,0.12); }
+.bg-white\/15 { background-color: rgba(255,255,255,0.15); }
+.bg-white\/18 { background-color: rgba(255,255,255,0.18); }
+
+/* Border opacity utilities */
+.border-white\/8  { border-color: rgba(255,255,255,0.08); }
+.border-white\/12 { border-color: rgba(255,255,255,0.12); }
+.border-white\/15 { border-color: rgba(255,255,255,0.15); }
+.border-white\/25 { border-color: rgba(255,255,255,0.25); }
+
+/* ── Consistent card shadows ── */
+.shadow-card       { box-shadow: 0 1px 2px rgba(0,0,0,0.04), 0 4px 16px rgba(0,0,0,0.05); }
+.shadow-card-hover { box-shadow: 0 4px 8px rgba(0,0,0,0.05), 0 16px 40px rgba(0,0,0,0.11); }
+.shadow-card-xl    { box-shadow: 0 8px 16px rgba(0,0,0,0.06), 0 24px 56px rgba(0,0,0,0.13); }
+
+/* ── Form input focus glow ── */
+.form-input:focus {
+  outline: none;
+  border-color: #3b82f6;
+  box-shadow: 0 0 0 3px rgba(59,130,246,0.12);
+}
+.form-input.form-input-error:focus {
+  border-color: #ef4444;
+  box-shadow: 0 0 0 3px rgba(239,68,68,0.12);
+}
+
+/* ── Button active press feedback ── */
+.btn-primary:active,
+.btn-accent:active,
+.btn-secondary:active {
+  transform: translateY(1px);
+}
+
+/* ── Modal overlay helper ── */
+.modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.50);
+  backdrop-filter: blur(4px);
+  z-index: 50;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1rem;
+}
+
+/* ── Toast z-index — always above modals ── */
+:root {
+  --toaster-z: 9999;
+}
+
+/* ── Stat counter no-wrap ── */
+.stat-value {
+  white-space: nowrap;
+  font-variant-numeric: tabular-nums;
+}
+
+/* ── Footer cursor fix ── */
+footer a,
+footer button {
+  cursor: pointer;
+}
+
+/* ── Suspense fade-in animation ── */
+@keyframes suspense-fade {
+  from { opacity: 0; transform: translateY(6px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+.suspense-enter {
+  animation: suspense-fade 0.25s ease forwards;
+}
+
+/* ── Page-level fade-in ── */
+.animate-fade-in {
+  animation: suspense-fade 0.2s ease forwards;
+}
+
+/* ── Scrollbar styling (webkit) ── */
+::-webkit-scrollbar       { width: 6px; height: 6px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: rgba(0,0,0,0.15); border-radius: 999px; }
+::-webkit-scrollbar-thumb:hover { background: rgba(0,0,0,0.25); }
+
+/* ════════════════════════════════════════════════
+   OWNER PORTAL — DESIGN SYSTEM
+   All classes prefixed with "owner-" for clarity
+   ════════════════════════════════════════════════ */
+
+/* ── Layout shell ── */
+.owner-layout-bg {
+  background-color: #f1f5f9;
+}
+
+/* ── Sidebar shell ── */
+.owner-sidebar {
+  background: linear-gradient(180deg, #0c1a32 0%, #0a1628 60%, #091422 100%);
+  border-right: 1px solid rgba(255, 255, 255, 0.05);
+  box-shadow: 4px 0 24px rgba(0, 0, 0, 0.18);
+}
+
+.owner-sidebar-border-b {
+  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+.owner-sidebar-border-t {
+  border-top: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+/* ── Owner profile card inside sidebar ── */
+.owner-profile-card {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 14px;
+  padding: 10px 12px;
+  transition: background 0.2s;
+}
+.owner-profile-card:hover {
+  background: rgba(255, 255, 255, 0.07);
+}
+
+.owner-online-dot {
+  position: absolute;
+  bottom: -2px;
+  right: -2px;
+  width: 11px;
+  height: 11px;
+  background: #10b981;
+  border: 2px solid #0a1628;
+  border-radius: 50%;
+}
+
+.owner-role-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  background: rgba(99, 102, 241, 0.18);
+  color: #a5b4fc;
+  font-size: 10px;
+  font-weight: 700;
+  padding: 2px 8px;
+  border-radius: 999px;
+  border: 1px solid rgba(99, 102, 241, 0.25);
+  letter-spacing: 0.02em;
+}
+
+.owner-role-pip {
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: #818cf8;
+  flex-shrink: 0;
+}
+
+/* ── Nav section label ── */
+.owner-nav-section-label {
+  font-size: 9px;
+  font-weight: 900;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.2);
+  padding: 0 12px;
+  margin-bottom: 10px;
+}
+
+/* ── Nav item base ── */
+.owner-nav-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 9px 12px;
+  border-radius: 12px;
+  font-weight: 600;
+  transition: all 0.18s ease;
+  position: relative;
+  overflow: hidden;
+  width: 100%;
+  text-align: left;
+  cursor: pointer;
+  border: none;
+  background: transparent;
+}
+
+.owner-nav-item-idle {
+  color: rgba(255, 255, 255, 0.5);
+}
+.owner-nav-item-idle:hover {
+  color: rgba(255, 255, 255, 0.95);
+  background: rgba(255, 255, 255, 0.07);
+}
+
+.owner-nav-item-active {
+  color: #ffffff;
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.25), inset 0 1px 0 rgba(255,255,255,0.12);
+}
+
+/* Per-route active accent colors */
+.owner-nav-active-violet  { background: #7c3aed; }
+.owner-nav-active-emerald { background: #059669; }
+.owner-nav-active-blue    { background: #2563eb; }
+.owner-nav-active-amber   { background: #d97706; }
+.owner-nav-active-indigo  { background: #4338ca; }
+.owner-nav-active-rose    { background: #e11d48; }
+
+/* ── Nav icon container ── */
+.owner-nav-icon {
+  width: 32px;
+  height: 32px;
+  border-radius: 9px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  transition: background 0.18s;
+}
+
+/* ── Active indicator pip ── */
+.owner-active-pip {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.75);
+  flex-shrink: 0;
+}
+
+/* ── Logout button ── */
+.owner-logout-btn {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 9px 12px;
+  border-radius: 12px;
+  width: 100%;
+  font-weight: 600;
+  color: rgba(248, 113, 113, 0.85);
+  transition: all 0.18s ease;
+  cursor: pointer;
+  border: none;
+  background: transparent;
+  text-align: left;
+}
+.owner-logout-btn:hover {
+  color: #ffffff;
+  background: #dc2626;
+}
+
+/* ── Topbar ── */
+.owner-topbar {
+  height: 64px;
+  background: #ffffff;
+  border-bottom: 1px solid #f1f5f9;
+  box-shadow: 0 1px 0 rgba(0, 0, 0, 0.04), 0 2px 8px rgba(0, 0, 0, 0.04);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 1.25rem;
+  position: sticky;
+  top: 0;
+  z-index: 30;
+  gap: 1rem;
+}
+
+@media (min-width: 1024px) {
+  .owner-topbar { padding: 0 2rem; }
+}
+
+/* ── Search bar in topbar ── */
+.owner-search-bar {
+  align-items: center;
+  gap: 8px;
+  background: #f8fafc;
+  border: 1px solid #e8edf3;
+  border-radius: 12px;
+  padding: 8px 14px;
+  width: 240px;
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+.owner-search-bar:focus-within {
+  border-color: #bfdbfe;
+  box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.08);
+  background: #ffffff;
+}
+
+/* ── Icon button (bell, etc.) in topbar ── */
+.owner-topbar-btn {
+  position: relative;
+  width: 38px;
+  height: 38px;
+  border-radius: 11px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #6b7280;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  transition: background 0.18s, color 0.18s;
+}
+.owner-topbar-btn:hover {
+  background: #f1f5f9;
+  color: #374151;
+}
+
+/* ── Notification red dot ── */
+.owner-notif-dot {
+  position: absolute;
+  top: 7px;
+  right: 7px;
+  width: 8px;
+  height: 8px;
+  background: #ef4444;
+  border-radius: 50%;
+  border: 1.5px solid #ffffff;
+}
+
+/* ── User chip in topbar ── */
+.owner-user-chip {
+  padding: 5px 12px 5px 5px;
+  border-left: 1px solid #f1f5f9;
+  margin-left: 2px;
+}
+
+/* ── Owner page cards ── */
+.owner-stat-card {
+  background: #ffffff;
+  border-radius: 16px;
+  box-shadow: 0 1px 2px rgba(0,0,0,0.04), 0 4px 16px rgba(0,0,0,0.05);
+  transition: box-shadow 0.25s ease, transform 0.25s ease;
+  overflow: hidden;
+}
+.owner-stat-card:hover {
+  box-shadow: 0 4px 8px rgba(0,0,0,0.05), 0 16px 40px rgba(0,0,0,0.11);
+  transform: translateY(-2px);
+}
+
+/* ── Owner table ── */
+.owner-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+.owner-table thead tr {
+  background: #f8fafc;
+}
+.owner-table th {
+  padding: 11px 16px;
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: #94a3b8;
+  text-align: left;
+  border-bottom: 1px solid #f1f5f9;
+}
+.owner-table td {
+  padding: 12px 16px;
+  font-size: 13.5px;
+  color: #374151;
+  border-bottom: 1px solid #f8fafc;
+}
+.owner-table tbody tr:last-child td {
+  border-bottom: none;
+}
+.owner-table tbody tr:hover td {
+  background: #fafbfd;
+}
+
+/* ── Section header (card title + action) ── */
+.owner-section-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 18px 24px;
+  border-bottom: 1px solid #f1f5f9;
+}
+.owner-section-title {
+  font-family: 'Outfit', sans-serif;
+  font-weight: 600;
+  font-size: 16px;
+  color: #111827;
+  margin: 0;
+}
+.owner-section-sub {
+  font-size: 12px;
+  color: #9ca3af;
+  margin-top: 2px;
+}
+
+/* ── Status badges (owner portal variants) ── */
+.owner-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  font-size: 11px;
+  font-weight: 700;
+  padding: 3px 10px;
+  border-radius: 999px;
+}
+.owner-badge-pending   { background: #fef3c7; color: #92400e; }
+.owner-badge-confirmed { background: #d1fae5; color: #065f46; }
+.owner-badge-active    { background: #dbeafe; color: #1e40af; }
+.owner-badge-completed { background: #ede9fe; color: #4c1d95; }
+.owner-badge-cancelled { background: #fee2e2; color: #991b1b; }
+
+/* ── Quick action button ── */
+.owner-quick-action {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 7px 14px;
+  border-radius: 10px;
+  font-size: 13px;
+  font-weight: 600;
+  transition: all 0.18s;
+  cursor: pointer;
+  border: 1px solid transparent;
+}
+.owner-quick-action-primary {
+  background: #2563eb;
+  color: #ffffff;
+  border-color: #2563eb;
+}
+.owner-quick-action-primary:hover {
+  background: #1d4ed8;
+  box-shadow: 0 4px 12px rgba(37, 99, 235, 0.3);
+  transform: translateY(-1px);
+}
+.owner-quick-action-ghost {
+  background: #f8fafc;
+  color: #374151;
+  border-color: #e5e7eb;
+}
+.owner-quick-action-ghost:hover {
+  background: #f1f5f9;
+  border-color: #d1d5db;
+}
+
+/* ── Sidebar scrollbar (webkit only) ── */
+aside .overflow-y-auto::-webkit-scrollbar       { width: 3px; }
+aside .overflow-y-auto::-webkit-scrollbar-track  { background: transparent; }
+aside .overflow-y-auto::-webkit-scrollbar-thumb  { background: rgba(255,255,255,0.12); border-radius: 999px; }
+
+/* ── bg-white/6 / bg-white/8 helpers if JIT misses them ── */
+.bg-white\/6  { background-color: rgba(255,255,255,0.06); }
+.bg-white\/8  { background-color: rgba(255,255,255,0.08); }
+
+/* ════════════════════════════════════════════════
+   FIXES & IMPROVEMENTS — v3 patch
+   ════════════════════════════════════════════════ */
+
+/* ── Fix: scrollbar-hide utility ── */
+.scrollbar-hide::-webkit-scrollbar { display: none; }
+.scrollbar-hide { -ms-overflow-style: none; scrollbar-width: none; }
+
+/* ── Fix: page-enter animation ── */
+.page-enter {
+  animation: pageIn 0.35s ease-out both;
+}
+
+/* ── Booking ID pill (mono-spaced like Amazon/Zomato) ── */
+.booking-id-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  font-family: 'JetBrains Mono', 'Fira Code', 'Courier New', monospace;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  color: #374151;
+  background: #f8fafc;
+  border: 1px solid #e2e8f0;
+  border-radius: 8px;
+  padding: 3px 8px;
+}
+
+/* ── Fix: btn-secondary border on dark backgrounds ── */
+.btn-secondary {
+  background: transparent;
+}
+
+/* ── Improved modal transitions ── */
+@keyframes modalIn {
+  from { opacity: 0; transform: scale(0.97) translateY(8px); }
+  to   { opacity: 1; transform: scale(1) translateY(0); }
+}
+.animate-modal-in {
+  animation: modalIn 0.22s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+/* ── Fix: owner topbar sticky on all screen sizes ── */
+.owner-topbar {
+  position: sticky;
+  top: 0;
+  z-index: 30;
+}
+
+/* ── Input group icons (left-padded inputs) ── */
+.input-icon-left {
+  position: absolute;
+  left: 14px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: #9ca3af;
+  pointer-events: none;
+  font-size: 13px;
+}
+
+/* ── Improved badge dot sizes ── */
+.badge::before {
+  width: 6px;
+  height: 6px;
+}
+
+/* ── Fix: card overflow for images ── */
+.card img {
+  display: block;
+}
+
+/* ── Tab scrollable on mobile ── */
+.tab-scroll {
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none;
+}
+.tab-scroll::-webkit-scrollbar { display: none; }
+
+/* ── Stat counter highlight ── */
+.stat-highlight {
+  background: linear-gradient(135deg, #eff6ff, #dbeafe);
+  border: 1px solid #bfdbfe;
+  border-radius: 16px;
+  padding: 16px;
+}
+
+/* ── Responsive table scroll ── */
+.table-scroll {
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
+/* ── Fix: form inputs on iOS don't zoom ── */
+@media (max-width: 767px) {
+  input[type="text"],
+  input[type="email"],
+  input[type="password"],
+  input[type="tel"],
+  input[type="number"],
+  select,
+  textarea {
+    font-size: 16px !important;
+  }
+}
+
+/* ── Fix: hero section min-height on small screens ── */
+@media (max-width: 640px) {
+  .hero-bg {
+    padding-top: 5rem;
+    padding-bottom: 3rem;
+  }
+}
+
+/* ── Owner clear history button hover ── */
+.clear-history-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 8px 14px;
+  font-size: 13px;
+  font-weight: 600;
+  border-radius: 10px;
+  border: 1px solid #fecaca;
+  background: #fef2f2;
+  color: #dc2626;
+  cursor: pointer;
+  transition: all 0.18s;
+}
+.clear-history-btn:hover {
+  background: #fee2e2;
+  border-color: #fca5a5;
+  box-shadow: 0 2px 8px rgba(220,38,38,0.12);
+}
+
+/* ── Fix: z-index stacking for modals > topbar ── */
+.modal-overlay, [class*="z-50"] {
+  z-index: 50;
+}
+.react-hot-toast-wrapper { z-index: 9999 !important; }
+
+/* ── Smooth focus outline ── */
+button:focus-visible,
+a:focus-visible {
+  outline: 2px solid #3b82f6;
+  outline-offset: 2px;
+  border-radius: 6px;
+}
+
+/* ── Owner portal: consistent content padding ── */
+.owner-content {
+  padding: 1.5rem;
+}
+@media (min-width: 1024px) {
+  .owner-content { padding: 2rem; }
+}
+
+
+/* ════════════════════════════════════════════════════════════════
+   RESPONSIVE PATCHES — v4
+   All media-query overrides and cross-component responsive fixes
+   ════════════════════════════════════════════════════════════════ */
+
+/* ── Mobile: prevent iOS zoom on focused inputs (font-size < 16px) ── */
+@media (max-width: 767px) {
+  input[type="text"],
+  input[type="email"],
+  input[type="password"],
+  input[type="number"],
+  input[type="tel"],
+  input[type="date"],
+  select,
+  textarea {
+    font-size: 16px !important;
+  }
+}
+
+/* ── Owner sidebar: full-width on very small screens ── */
+@media (max-width: 360px) {
+  .owner-sidebar { width: 100%; }
+}
+
+/* ── Owner layout: tighter page padding on small screens ── */
+@media (max-width: 640px) {
+  .owner-topbar { padding: 0 1rem; }
+}
+
+/* ── Manage Cars table: compact column sizing ── */
+@media (max-width: 900px) {
+  .owner-table th,
+  .owner-table td {
+    padding: 10px 12px;
+  }
+}
+
+/* ── Hero search form: stack nicely on mobile ── */
+@media (max-width: 640px) {
+  .hero-search-form .search-divider { display: none; }
+}
+
+/* ── Dropdown select: custom arrow visible on all browsers ── */
+select.form-input {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20' fill='none'%3E%3Cpath d='M7 7l3 3 3-3' stroke='%239ca3af' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 12px center;
+  background-size: 18px;
+  padding-right: 2.5rem;
+  appearance: none;
+  -webkit-appearance: none;
+}
+
+/* ── Navbar: ensure mobile menu items are fully tappable ── */
+@media (max-width: 768px) {
+  .mobile-nav-link {
+    padding: 12px 16px;
+    min-height: 44px;
+    display: flex;
+    align-items: center;
+  }
+}
+
+/* ── Card: consistent border-radius on all breakpoints ── */
+@media (max-width: 480px) {
+  .card { border-radius: 16px; }
+}
+
+/* ── Fix: modal overflow on small phones ── */
+@media (max-width: 480px) {
+  .modal-body,
+  [class*="max-w-3xl"] {
+    margin: 0.5rem;
+    max-height: calc(100dvh - 1rem);
+  }
+}
+
+/* ── Fix: owner stat cards grid on very small screens ── */
+@media (max-width: 400px) {
+  .grid.grid-cols-2 { grid-template-columns: 1fr; }
+}
+
+/* ── CarCard: consistent min-width on grid ── */
+.car-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 1.25rem;
+}
+@media (max-width: 640px) {
+  .car-grid { grid-template-columns: 1fr; }
+}
+
+/* ════════════════════════════════════════════════
+   OWNER PORTAL — MANAGE CARS SPECIFIC FIXES
+   ════════════════════════════════════════════════ */
+
+/* ── Edit modal: proper scroll on short screens ── */
+.edit-modal-body {
+  max-height: calc(100dvh - 10rem);
+  overflow-y: auto;
+  overscroll-behavior: contain;
+}
+
+/* ── Owner fleet stat cards: better text scaling ── */
+.fleet-stat-value {
+  font-family: 'Outfit', sans-serif;
+  font-weight: 900;
+  font-size: clamp(1.25rem, 3vw, 1.75rem);
+  line-height: 1;
+}
+
+/* ════════════════════════════════════════════════
+   FORM COMPONENT FIXES
+   ════════════════════════════════════════════════ */
+
+/* ── Date inputs: consistent text color in all browsers ── */
+input[type="date"] {
+  color-scheme: light;
+  color: #111827;
+}
+input[type="date"]::-webkit-calendar-picker-indicator {
+  opacity: 0.5;
+  cursor: pointer;
+}
+input[type="date"]:not([value=""]) {
+  color: #111827;
+}
+
+/* ── Select: option text always dark ── */
+select option {
+  color: #111827;
+  background: #ffffff;
+}
+
+/* ── Focus ring: consistent across all interactive elements ──*/
+.form-input:focus-visible,
+button:focus-visible,
+a:focus-visible {
+  outline: 2px solid #3b82f6;
+  outline-offset: 2px;
+  border-radius: 6px;
+}
+
+/* ════════════════════════════════════════════════
+   PRINT — Hide interactive chrome when printing
+   ════════════════════════════════════════════════ */
+@media print {
+  .owner-sidebar,
+  .owner-topbar,
+  .no-print { display: none !important; }
+  main { padding: 0 !important; }
+}
+
+/* ── xs breakpoint text utilities (matches tailwind xs: 380px) ── */
+@media (min-width: 380px) {
+  .xs\:text-xs  { font-size: 0.75rem;  line-height: 1rem; }
+  .xs\:text-sm  { font-size: 0.875rem; line-height: 1.25rem; }
+  .xs\:block    { display: block; }
+  .xs\:flex     { display: flex; }
+  .xs\:hidden   { display: none; }
+  .xs\:inline   { display: inline; }
+  .xs\:inline-flex { display: inline-flex; }
+}
+
+/* ════════════════════════════════════════════════════════════
+   DRIVEEASE ENHANCED UI — Global Design Improvements
+   ════════════════════════════════════════════════════════════ */
+
+/* ── Smooth page transitions ── */
+.page-enter {
+  animation: pageSlideIn 0.35s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+@keyframes pageSlideIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to   { opacity: 1; transform: translateY(0);    }
+}
+
+/* ── Enhanced btn-primary with gradient & shadow ── */
+.btn-primary {
+  background: linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%) !important;
+  box-shadow: 0 4px 14px rgba(37, 99, 235, 0.28) !important;
+  letter-spacing: 0.01em;
+}
+.btn-primary:hover {
+  background: linear-gradient(135deg, #1d4ed8 0%, #1e40af 100%) !important;
+  box-shadow: 0 6px 20px rgba(37, 99, 235, 0.38) !important;
+}
+
+/* ── Form inputs — enhanced focus & hover ── */
+.form-input {
+  transition: border-color 0.18s ease, box-shadow 0.18s ease, background-color 0.15s ease !important;
+}
+.form-input:hover:not(:focus):not(:disabled) {
+  border-color: #94a3b8 !important;
+  background: #fafcff !important;
+}
+.form-input:focus {
+  border-color: #2563eb !important;
+  box-shadow: 0 0 0 4px rgba(37, 99, 235, 0.1) !important;
+  background: #fff !important;
+}
+
+/* ── Form label styling ── */
+.form-label {
+  font-size: 0.78rem !important;
+  font-weight: 700 !important;
+  letter-spacing: 0.04em !important;
+  text-transform: uppercase !important;
+  color: #475569 !important;
+}
+
+/* ── Card improvements ── */
+.card {
+  transition: box-shadow 0.25s ease, transform 0.2s ease !important;
+}
+
+/* ── Select element enhanced arrows ── */
+select.form-input {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%2394a3b8' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 12px center;
+  padding-right: 2.75rem !important;
+  cursor: pointer;
+  -webkit-appearance: none;
+  appearance: none;
+}
+
+/* ── Textarea resize handle ── */
+textarea.form-input {
+  resize: vertical;
+  min-height: 100px;
+}
+
+/* ── Section tag pill ── */
+.section-tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 0.7rem;
+  font-weight: 800;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: #2563eb;
+  background: linear-gradient(135deg, #eff6ff 0%, #dbeafe 100%);
+  border: 1px solid #bfdbfe;
+  padding: 5px 14px;
+  border-radius: 100px;
+  margin-bottom: 12px;
+}
+.section-tag::before {
+  content: '';
+  display: inline-block;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: #2563eb;
+}
+
+/* ── Section title ── */
+.section-title {
+  font-family: 'Plus Jakarta Sans', sans-serif !important;
+  font-weight: 800 !important;
+  color: #0f172a !important;
+  line-height: 1.2 !important;
+  letter-spacing: -0.02em !important;
+}
+
+/* ── Hero section ── */
+.hero-bg {
+  background: linear-gradient(135deg, #0f172a 0%, #1e3a8a 40%, #1d4ed8 80%, #2563eb 100%) !important;
+  position: relative;
+}
+.hero-bg::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(ellipse at 70% 50%, rgba(99,102,241,0.15) 0%, transparent 70%);
+  pointer-events: none;
+}
+
+/* ── Owner stats cards ── */
+.owner-stat-card {
+  background: #fff;
+  border-radius: 16px;
+  border: 1px solid #f1f5f9;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.04), 0 4px 16px rgba(0,0,0,0.05);
+  transition: box-shadow 0.2s ease, transform 0.2s ease;
+}
+.owner-stat-card:hover {
+  box-shadow: 0 4px 12px rgba(0,0,0,0.07), 0 16px 40px rgba(0,0,0,0.09);
+  transform: translateY(-1px);
+}
+
+/* ── Customer Responses — status animations ── */
+@keyframes newMessagePulse {
+  0%, 100% { opacity: 1; }
+  50%       { opacity: 0.6; }
+}
+.message-unread-dot {
+  animation: newMessagePulse 1.8s ease-in-out infinite;
+}
+
+/* ── Floating label inputs (used in Contact page) ── */
+.floating-input-wrapper {
+  position: relative;
+}
+.floating-input-wrapper input:focus + label,
+.floating-input-wrapper input:not(:placeholder-shown) + label {
+  top: 0.5rem;
+  font-size: 0.65rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: #2563eb;
+}
+
+/* ── Scrollbar styling (owner portal) ── */
+.owner-sidebar::-webkit-scrollbar        { width: 4px; }
+.owner-sidebar::-webkit-scrollbar-track  { background: transparent; }
+.owner-sidebar::-webkit-scrollbar-thumb  { background: rgba(255,255,255,0.12); border-radius: 4px; }
+.owner-sidebar:hover::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.22); }
+
+/* ── Skeleton shimmer improvements ── */
+@keyframes shimmer {
+  0%   { background-position: -400px 0; }
+  100% { background-position: 400px 0; }
+}
+.skeleton {
+  background: linear-gradient(90deg, #f0f4f8 25%, #e2e8f0 50%, #f0f4f8 75%);
+  background-size: 800px 100%;
+  animation: shimmer 1.4s ease-in-out infinite;
+  border-radius: 8px;
+}
+
+/* ── Toast improvements ── */
+[data-sonner-toast] {
+  border-radius: 14px !important;
+}
+
+/* ── Car card premium glow ── */
+article.ring-1.ring-amber-200\/60 {
+  box-shadow: 0 2px 8px rgba(245,158,11,0.1), 0 8px 24px rgba(245,158,11,0.08);
+}
+article.ring-1.ring-amber-200\/60:hover {
+  box-shadow: 0 4px 16px rgba(245,158,11,0.18), 0 20px 48px rgba(245,158,11,0.12);
+}
+
+/* ── Animated gradient badge ── */
+@keyframes gradientShift {
+  0%   { background-position: 0% 50%;   }
+  50%  { background-position: 100% 50%; }
+  100% { background-position: 0% 50%;   }
+}
+.badge-animated {
+  background: linear-gradient(135deg, #f59e0b, #ea580c, #f59e0b);
+  background-size: 200% 200%;
+  animation: gradientShift 3s ease infinite;
+  color: white;
+}
+
+/* ── Table row hover in Owner pages ── */
+.owner-table-row {
+  transition: background-color 0.12s ease;
+}
+.owner-table-row:hover {
+  background-color: #f8faff;
+}
+
+/* ── Input placeholder styling ── */
+.form-input::placeholder {
+  color: #94a3b8;
+  font-weight: 400;
+}
+
+/* ── Focus ring for accessibility ── */
+.form-input:focus-visible {
+  outline: none;
+}
+
+/* ── Payment page card preview shadow ── */
+.card-3d-shadow {
+  filter: drop-shadow(0 16px 32px rgba(17, 24, 39, 0.35));
+}
+
+/* ── Responsive form grid ── */
+@media (max-width: 640px) {
+  .form-grid-2 {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* ── Number input without spinners ── */
+input[type=number]::-webkit-inner-spin-button,
+input[type=number]::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+input[type=number] { -moz-appearance: textfield; }
+
+/* ── Contact form message progress bar ── */
+.msg-progress-fill {
+  transition: width 0.3s cubic-bezier(0.4, 0, 0.2, 1),
+              background-color 0.3s ease;
+}
+
+/* ── Owner Dashboard Customer Responses card transitions ── */
+.cr-row-enter {
+  animation: crSlideIn 0.2s ease both;
+}
+@keyframes crSlideIn {
+  from { opacity: 0; transform: translateY(-4px); }
+  to   { opacity: 1; transform: translateY(0);    }
+}
+
+
+/* ═══════════════════════════════════════════════════════
+   MODERN UI ENHANCEMENTS — Hover Animations & Effects
+═══════════════════════════════════════════════════════ */
+
+/* ── Parallax / Magnetic card tilt ── */
+.tilt-card {
+  transform-style: preserve-3d;
+  transition: transform 0.15s ease-out, box-shadow 0.3s ease;
+  will-change: transform;
+}
+.tilt-card:hover {
+  box-shadow: 0 20px 60px rgba(0,0,0,0.14), 0 8px 24px rgba(0,0,0,0.08);
+}
+
+/* ── Shimmer hover on buttons ── */
+.btn-primary, .btn-accent {
+  position: relative;
+  overflow: hidden;
+}
+.btn-primary::after, .btn-accent::after {
+  content: '';
+  position: absolute;
+  top: -50%;
+  left: -60%;
+  width: 40%;
+  height: 200%;
+  background: linear-gradient(105deg, transparent 40%, rgba(255,255,255,0.22) 50%, transparent 60%);
+  transform: skewX(-20deg);
+  transition: left 0.5s ease;
+  pointer-events: none;
+}
+.btn-primary:hover::after, .btn-accent:hover::after {
+  left: 130%;
+}
+
+/* ── Card lift on hover ── */
+.card-hover-lift {
+  transition: transform 0.25s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.25s ease;
+}
+.card-hover-lift:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 12px 40px rgba(0,0,0,0.12), 0 4px 16px rgba(0,0,0,0.06);
+}
+
+/* ── Glow ring on focus/hover for interactive elements ── */
+.glow-hover {
+  transition: box-shadow 0.2s ease;
+}
+.glow-hover:hover {
+  box-shadow: 0 0 0 4px rgba(37,99,235,0.15), 0 4px 20px rgba(37,99,235,0.12);
+}
+
+/* ── Magnetic button wobble ── */
+@keyframes magneticPop {
+  0%   { transform: scale(1); }
+  40%  { transform: scale(1.05); }
+  70%  { transform: scale(0.97); }
+  100% { transform: scale(1); }
+}
+.magnetic-pop:active {
+  animation: magneticPop 0.3s ease forwards;
+}
+
+/* ── Floating label enhanced (no overlap) ── */
+.fi-label-active {
+  top: 0.5rem !important;
+  font-size: 0.625rem !important;
+  font-weight: 700 !important;
+  letter-spacing: 0.1em !important;
+  text-transform: uppercase !important;
+}
+
+/* ── Stat card count-up shimmer ── */
+@keyframes countShimmer {
+  0%   { opacity: 0.6; }
+  50%  { opacity: 1; }
+  100% { opacity: 0.6; }
+}
+.counting { animation: countShimmer 0.8s ease infinite; }
+
+/* ── Smooth page-enter ── */
+.page-enter {
+  animation: pageEnter 0.35s ease both;
+}
+@keyframes pageEnter {
+  from { opacity: 0; transform: translateY(8px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* ── Fade in ── */
+.animate-fade-in {
+  animation: fadeIn 0.3s ease both;
+}
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(6px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* ── Scale in (modal) ── */
+.animate-scale-in {
+  animation: scaleIn 0.22s cubic-bezier(0.34,1.56,0.64,1) both;
+}
+@keyframes scaleIn {
+  from { opacity: 0; transform: scale(0.92); }
+  to   { opacity: 1; transform: scale(1); }
+}
+
+/* ── Interactive icon bounce on hover ── */
+.icon-bounce {
+  display: inline-block;
+  transition: transform 0.2s cubic-bezier(0.34,1.56,0.64,1);
+}
+.icon-bounce:hover { transform: scale(1.25) rotate(-5deg); }
+
+/* ── Underline slide animation for nav links ── */
+.nav-link-animated {
+  position: relative;
+}
+.nav-link-animated::after {
+  content: '';
+  position: absolute;
+  bottom: -2px;
+  left: 0;
+  width: 0;
+  height: 2px;
+  background: currentColor;
+  border-radius: 2px;
+  transition: width 0.25s ease;
+}
+.nav-link-animated:hover::after { width: 100%; }
+
+/* ── Gradient text animation ── */
+@keyframes gradientText {
+  0%, 100% { background-position: 0% 50%; }
+  50%       { background-position: 100% 50%; }
+}
+.text-gradient-animate {
+  background: linear-gradient(135deg, #2563eb, #7c3aed, #2563eb);
+  background-size: 200% auto;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  animation: gradientText 4s ease infinite;
+}
+
+/* ── Input focus lift ── */
+.form-input:focus {
+  transform: translateY(-1px);
+  transition: transform 0.15s ease, border-color 0.15s ease, box-shadow 0.15s ease;
+}
+
+/* ── Owner sidebar nav item hover ── */
+.sidebar-nav-item {
+  position: relative;
+  overflow: hidden;
+}
+.sidebar-nav-item::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  width: 0;
+  background: rgba(255,255,255,0.08);
+  transition: width 0.2s ease;
+  border-radius: inherit;
+}
+.sidebar-nav-item:hover::before { width: 100%; }
+
+/* ── Pulse dot for live/active indicators ── */
+@keyframes pulseDot {
+  0%, 100% { transform: scale(1); opacity: 1; }
+  50%       { transform: scale(1.5); opacity: 0.5; }
+}
+.pulse-dot {
+  animation: pulseDot 1.5s ease-in-out infinite;
+}
+
+/* ── Smooth scroll snap for feature cards ── */
+.scroll-snap-x {
+  scroll-snap-type: x mandatory;
+  -webkit-overflow-scrolling: touch;
+}
+.scroll-snap-x > * {
+  scroll-snap-align: start;
+}
+
+/* ── Hero parallax layer ── */
+.parallax-layer {
+  will-change: transform;
+  transition: transform 0.1s linear;
+}
+
+/* ── KPI card background glow ── */
+.kpi-card::before {
+  content: '';
+  position: absolute;
+  top: 0; right: 0;
+  width: 80px; height: 80px;
+  border-radius: 50%;
+  opacity: 0.06;
+  transition: opacity 0.3s ease;
+  pointer-events: none;
+}
+.kpi-card:hover::before { opacity: 0.12; }
+
+/* ── Responsive improvements ── */
+@media (max-width: 640px) {
+  .card { border-radius: 1rem; }
+  .btn-primary, .btn-secondary { padding: 0.625rem 1.25rem; font-size: 0.875rem; }
+  .section-title { font-size: clamp(1.5rem, 5vw, 2.5rem); }
+}
+
+/* ── Smooth hover for owner stat cards ── */
+.owner-stat-card {
+  transition: transform 0.25s cubic-bezier(0.34,1.2,0.64,1), box-shadow 0.25s ease !important;
+}
+.owner-stat-card:hover {
+  transform: translateY(-3px) !important;
+  box-shadow: 0 8px 30px rgba(0,0,0,0.1), 0 3px 10px rgba(0,0,0,0.06) !important;
+}
+
+/* ── Booking card animated border ── */
+.booking-card-new {
+  animation: newBookingGlow 2s ease-in-out infinite alternate;
+}
+@keyframes newBookingGlow {
+  from { box-shadow: 0 0 0 2px rgba(37,99,235,0.3); }
+  to   { box-shadow: 0 0 0 3px rgba(37,99,235,0.6), 0 4px 20px rgba(37,99,235,0.15); }
+}
+
+/* ── Table row hover ── */
+.data-table tbody tr {
+  transition: background-color 0.12s ease, transform 0.12s ease;
+}
+.data-table tbody tr:hover {
+  background-color: #f8faff;
+  transform: translateX(2px);
+}
+
+/* ── Toggle / switch animation ── */
+.toggle-switch {
+  transition: background-color 0.2s ease;
+}
+.toggle-thumb {
+  transition: transform 0.2s cubic-bezier(0.34,1.56,0.64,1);
+}
+
+/* ── Image zoom on car card ── */
+article .car-img {
+  transition: transform 0.6s cubic-bezier(0.25,0.46,0.45,0.94);
+}
+article:hover .car-img { transform: scale(1.07); }
+
+/* ── Loading bar at top of page ── */
+.page-loading-bar {
+  position: fixed;
+  top: 0; left: 0;
+  height: 3px;
+  background: linear-gradient(90deg, #2563eb, #7c3aed, #2563eb);
+  background-size: 200% 100%;
+  animation: loadingBar 1.2s ease-in-out infinite;
+  z-index: 9999;
+  border-radius: 0 2px 2px 0;
+}
+@keyframes loadingBar {
+  0%   { width: 0; background-position: 0%; }
+  50%  { width: 70%; background-position: 100%; }
+  100% { width: 100%; opacity: 0; }
+}
+

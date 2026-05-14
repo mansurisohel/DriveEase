@@ -1,0 +1,29 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 60" fill="none">
+  <!-- Car icon -->
+  <g transform="translate(4, 8)">
+    <!-- Car body -->
+    <rect x="2" y="16" width="44" height="18" rx="4" fill="#2563EB"/>
+    <!-- Roof/cabin -->
+    <path d="M10 16 L16 6 L34 6 L40 16Z" fill="#1D4ED8"/>
+    <!-- Windows -->
+    <path d="M17 8 L14 15 L26 15 L26 8Z" fill="#93C5FD" opacity="0.9"/>
+    <path d="M28 8 L28 15 L38 15 L35 8Z" fill="#93C5FD" opacity="0.9"/>
+    <!-- Wheels -->
+    <circle cx="12" cy="34" r="6" fill="#0F172A"/>
+    <circle cx="12" cy="34" r="3.5" fill="#475569"/>
+    <circle cx="12" cy="34" r="1.5" fill="#CBD5E1"/>
+    <circle cx="36" cy="34" r="6" fill="#0F172A"/>
+    <circle cx="36" cy="34" r="3.5" fill="#475569"/>
+    <circle cx="36" cy="34" r="1.5" fill="#CBD5E1"/>
+    <!-- Speed lines -->
+    <line x1="0" y1="22" x2="-5" y2="22" stroke="#60A5FA" stroke-width="2" stroke-linecap="round" opacity="0.7"/>
+    <line x1="0" y1="26" x2="-8" y2="26" stroke="#60A5FA" stroke-width="2" stroke-linecap="round" opacity="0.5"/>
+    <line x1="0" y1="30" x2="-5" y2="30" stroke="#60A5FA" stroke-width="2" stroke-linecap="round" opacity="0.3"/>
+  </g>
+  <!-- Text: DriveEase -->
+  <text x="60" y="36" font-family="'Outfit', 'Trebuchet MS', sans-serif" font-size="22" font-weight="800" fill="#0F172A" letter-spacing="-0.5">Drive</text>
+  <text x="112" y="36" font-family="'Outfit', 'Trebuchet MS', sans-serif" font-size="22" font-weight="800" fill="#2563EB" letter-spacing="-0.5">Ease</text>
+  <!-- Tagline dot -->
+  <circle cx="57" cy="46" r="2" fill="#2563EB"/>
+  <text x="63" y="49" font-family="'Plus Jakarta Sans', sans-serif" font-size="8" font-weight="600" fill="#64748B" letter-spacing="0.8">PREMIUM CAR RENTAL</text>
+</svg>
